@@ -3,19 +3,19 @@ package src.main.java.IB.IA.signInSystem;
 import java.time.LocalDateTime;
 
 public class AttendanceRecord {
-    private String studentId;
+    private int studentId;
     private LocalDateTime signInTime;
     private LocalDateTime signOutTime;
     private boolean autoLoggedOut;
 
-    public AttendanceRecord(String studentId, LocalDateTime signInTime, LocalDateTime signOutTime) {
+    public AttendanceRecord(int studentId, LocalDateTime signInTime) {
         this.studentId = studentId;
         this.signInTime = signInTime;
-        this.signOutTime = signOutTime;
+        this.signOutTime = null; //temporary, sign out time is set properly when user sign out
         this.autoLoggedOut = false;
     }
 
-    public String getStudentId() {
+    public int getStudentId() {
         return this.studentId;
     }
 

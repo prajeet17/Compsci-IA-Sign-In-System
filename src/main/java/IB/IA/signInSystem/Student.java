@@ -5,10 +5,10 @@ public class Student {
     private String contact;
     private int id;
 
-    public Student(String name, String contact, int id) {
+    public Student(String name, String contact, int studentId) {
         this.name = name;
         this.contact = contact;
-        this.id = id;
+        this.id = studentId;
     }
 
     public String getName() {
