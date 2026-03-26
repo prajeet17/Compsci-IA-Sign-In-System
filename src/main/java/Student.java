@@ -1,5 +1,3 @@
-package src.main.java.IB.IA.signInSystem;
-
 public class Student {
     private String name;
     private String contact;

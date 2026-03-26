@@ -1,5 +1,3 @@
-package src.main.java.IB.IA.signInSystem;
-
 import java.time.LocalDateTime;
 
 public class AttendanceRecord {
