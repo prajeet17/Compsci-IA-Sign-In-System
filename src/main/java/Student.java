@@ -1,12 +1,22 @@
+import org.mindrot.jbcrypt.BCrypt;
+
 public class Student {
     private String name;
     private String contact;
     private int id;
+    private String password;
+    private Status status;
 
-    public Student(String name, String contact, int studentId) {
+    public Student(String name, String contact, int studentId, String password, Status status, boolean encrypted) {
         this.name = name;
         this.contact = contact;
         this.id = studentId;
+        if (encrypted) {
+            this.password = password;
+        } else {
+            this.password = BCrypt.hashpw(password, BCrypt.gensalt());
+        }
+        this.status = status;
     }
 
     public String getName() {
@@ -21,16 +31,20 @@ public class Student {
         return this.id;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getPassword() {
+        return this.password;
     }
 
-    public void setContact(String contact) {
-        this.contact = contact;
+    public void setPassword(String password) {
+        this.password = BCrypt.hashpw(password, BCrypt.gensalt());
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
 }

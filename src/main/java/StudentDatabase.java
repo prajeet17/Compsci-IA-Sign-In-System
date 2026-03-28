@@ -6,14 +6,17 @@ public class StudentDatabase {
 
     public StudentDatabase() throws SQLException {
         conn = DriverManager.getConnection("jdbc:h2:~/attendance_db");
-        conn.createStatement().execute("CREATE TABLE IF NOT EXISTS students (name VARCHAR(100) NOT NULL, contact VARCHAR(100) NOT NULL, student_id INT PRIMARY KEY)");
+        conn.createStatement().execute("CREATE TABLE IF NOT EXISTS students (name VARCHAR(100) NOT NULL, contact VARCHAR(100) NOT NULL, student_id INT PRIMARY KEY, password VARCHAR(200) NOT NULL, status VARCHAR(7) NOT NULL, encrypted BOOLEAN)");
     }
 
     public void addStudent(Student student ) throws SQLException {
-        PreparedStatement statement = conn.prepareStatement("INSERT INTO students VALUES (?, ?, ?)");
+        PreparedStatement statement = conn.prepareStatement("INSERT INTO students VALUES (?, ?, ?, ?, ?, ?)");
         statement.setString(1, student.getName());
         statement.setString(2, student.getContact());
         statement.setInt(3, student.getId());
+        statement.setString(4, student.getPassword());
+        statement.setString(5, student.getStatus().name());
+        statement.setBoolean(6, true);
         statement.executeUpdate();
     }
 
@@ -28,7 +31,7 @@ public class StudentDatabase {
         statement.setInt(1, studentId);
         ResultSet result = statement.executeQuery();
         if (result.next()) {
-            return new Student(result.getString("name"), result.getString("contact"), result.getInt("student_id"));
+            return new Student(result.getString("name"), result.getString("contact"), result.getInt("student_id"), result.getString("password"), Status.valueOf(result.getString("status")), result.getBoolean("encrypted"));
         } else {
             return null;
         }
@@ -40,7 +43,7 @@ public class StudentDatabase {
         ResultSet result = statement.executeQuery();
         ArrayList<Student> students = new ArrayList<>();
         while (result.next()) {
-            students.add(new Student(result.getString("name"), result.getString("contact"), result.getInt("student_id")));
+            students.add(new Student(result.getString("name"), result.getString("contact"), result.getInt("student_id"), result.getString("password"), Status.valueOf(result.getString("status")), result.getBoolean("encrypted")));
         }
         return students;
     }
@@ -50,16 +53,24 @@ public class StudentDatabase {
         ResultSet result = statement.executeQuery();
         ArrayList<Student> students = new ArrayList<>();
         while (result.next()) {
-            students.add(new Student(result.getString("name"), result.getString("contact"), result.getInt("student_id")));
+            students.add(new Student(result.getString("name"), result.getString("contact"), result.getInt("student_id"), result.getString("password"), Status.valueOf(result.getString("status")), result.getBoolean("encrypted")));
         }
         return students;
     }
 
     public void updateStudent(Student student) throws SQLException {
-        PreparedStatement statement = conn.prepareStatement("UPDATE students SET name = ?, contact = ? WHERE student_id = ?");
+        PreparedStatement statement = conn.prepareStatement("UPDATE students SET name = ?, contact = ?, password = ? WHERE student_id = ?");
         statement.setString(1, student.getName());
         statement.setString(2, student.getContact());
-        statement.setInt(3, student.getId());
+        statement.setString(3, student.getPassword());
+        statement.setInt(4, student.getId());
+        statement.executeUpdate();
+    }
+
+    public void setStatus(int studentId, Status status) throws SQLException {
+        PreparedStatement statement = conn.prepareStatement("UPDATE students SET status = ? WHERE student_id = ?");
+        statement.setString(1, status.name());
+        statement.setInt(2, studentId);
         statement.executeUpdate();
     }
 
