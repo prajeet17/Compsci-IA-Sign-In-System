@@ -11,7 +11,7 @@ public class AttendanceDatabase {
         conn.createStatement().execute("CREATE TABLE IF NOT EXISTS records (student_id INT NOT NULL REFERENCES students(student_id), sign_in_time TIMESTAMP NOT NULL, sign_out_time TIMESTAMP, auto_logged_out BOOLEAN DEFAULT FALSE, PRIMARY KEY (student_id, sign_in_time))");
     }
 
-    private AttendanceRecord getLastRecord(int studentId) throws SQLException {
+    public AttendanceRecord getLastRecord(int studentId) throws SQLException {
         PreparedStatement preparedStatement = conn.prepareStatement("SELECT * FROM records WHERE student_id = ? ORDER BY sign_in_time DESC LIMIT 1"); //only pulls most recent record of student, have to use prepared statement cause SQL injection
         preparedStatement.setInt(1, studentId); //inserts studentId into first question mark
         ResultSet result = preparedStatement.executeQuery();
