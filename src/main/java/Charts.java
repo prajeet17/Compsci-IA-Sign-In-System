@@ -77,4 +77,17 @@ public class Charts {
         }
         return slices;
     }
+
+    public static LocalDate[] past7Days() {
+        return new LocalDate[]{ LocalDate.now().minusDays(6), LocalDate.now() };
+    }
+
+    public static LocalDate[] past30Days() {
+        return new LocalDate[]{ LocalDate.now().minusDays(29), LocalDate.now() };
+    }
+
+    public static LocalDate[] allTime() {
+        return new LocalDate[]{ LocalDate.of(2000, 1, 1), LocalDate.now() };
+    }
+
 }

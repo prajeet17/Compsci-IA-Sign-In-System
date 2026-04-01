@@ -1,3 +1,5 @@
+import org.mindrot.jbcrypt.BCrypt;
+
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -62,7 +64,7 @@ public class StudentDatabase {
         PreparedStatement statement = conn.prepareStatement("UPDATE students SET name = ?, contact = ?, password = ? WHERE student_id = ?");
         statement.setString(1, student.getName());
         statement.setString(2, student.getContact());
-        statement.setString(3, student.getPassword());
+        statement.setString(3, BCrypt.hashpw(student.getPassword(), BCrypt.gensalt()));
         statement.setInt(4, student.getId());
         statement.executeUpdate();
     }
@@ -83,5 +85,23 @@ public class StudentDatabase {
         } else {
             return false;
         }
+    }
+
+    public void setPassword(int studentId, String password) throws SQLException {
+        PreparedStatement statement = conn.prepareStatement("UPDATE students SET password = ? WHERE student_id = ?");
+        statement.setString(1, BCrypt.hashpw(password, BCrypt.gensalt()));
+        statement.setInt(2, studentId);
+        statement.executeUpdate();
+    }
+
+    public int size() throws SQLException {
+        ResultSet rs = conn.createStatement()
+                .executeQuery("SELECT COUNT(*) FROM students");
+        int count = 0;
+        if (rs.next()) {
+            count = rs.getInt(1);
+        }
+        return count;
+
     }
 }

@@ -36,8 +36,4 @@ public class AttendanceRecord {
     public void setSignOutTime(LocalDateTime signOutTime) {
         this.signOutTime = signOutTime;
     }
-
-    public void setSignInTime(LocalDateTime signInTime) {
-        this.signInTime = signInTime;
-    }
 }

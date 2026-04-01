@@ -78,4 +78,11 @@ public class AttendanceDatabase {
     public List<AttendanceRecord> getAllRecords() throws SQLException {
         return toList(conn.createStatement().executeQuery("SELECT * FROM records ORDER BY sign_in_time DESC"));
     }
+
+    public void editSignOutTime(int studentId, LocalDateTime newTime) throws SQLException {
+        PreparedStatement preparedStatement = conn.prepareStatement("UPDATE records SET sign_out_time = ? WHERE student_id = ? AND sign_out_time IS NULL");
+        preparedStatement.setObject(1, newTime);
+        preparedStatement.setInt(2, studentId);
+        preparedStatement.executeUpdate();
+    }
 }
