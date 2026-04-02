@@ -11,7 +11,7 @@ public class AdminDashboardScreen {
 
     public AdminDashboardScreen(Stage stage, SignInApp app) {
         this.stage = stage;
-        this.app   = app;
+        this.app = app;
     }
 
     public void show() {
