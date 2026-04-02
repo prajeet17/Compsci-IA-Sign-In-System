@@ -38,7 +38,7 @@ public class OfficerDashboardScreen {
         HBox dbIcon = makeIcon("📀");
         Label dbTitle = new Label("Database");
         dbTitle.setStyle("-fx-font-size: 20px; -fx-font-weight: bold;");
-        Label dbSubtitle = new Label("View and export stats");
+        Label dbSubtitle = new Label("View stats");
         dbSubtitle.setStyle("-fx-font-size: 13px; -fx-text-fill: #666666;");
         VBox dbText = new VBox(4, dbTitle, dbSubtitle);
         HBox dbTile = new HBox(16, dbIcon, dbText);
