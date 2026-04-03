@@ -101,9 +101,10 @@ public class StudentDatabase {
      * @throws SQLException exception if something database related fails
      */
     public void setPassword(int studentId, String password) throws SQLException {
-        PreparedStatement statement = conn.prepareStatement("UPDATE students SET password = ? WHERE student_id = ?");
+        PreparedStatement statement = conn.prepareStatement("UPDATE students SET password = ?, encrypted = ? WHERE student_id = ?");
         statement.setString(1, BCrypt.hashpw(password, BCrypt.gensalt()));
-        statement.setInt(2, studentId);
+        statement.setBoolean(2, true);
+        statement.setInt(3, studentId);
         statement.executeUpdate();
     }
 
