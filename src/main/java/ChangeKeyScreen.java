@@ -37,13 +37,13 @@ public class ChangeKeyScreen {
         Label back = new Label("back to dashboard");
         back.setStyle("-fx-font-size: 13px; -fx-text-fill: #29ABE2; -fx-cursor: hand;");
         back.setOnMouseClicked(event -> new AdminDashboardScreen(stage, app).show());
-        Label changeOfficerKey = new Label("Change Officer Key");
+        Label changeOfficerKey = new Label("Change Director Key");
         changeOfficerKey.setStyle("-fx-font-size: 26px; -fx-font-weight: bold;");
-        Label selectOfficer = new Label("Select officer:");
+        Label selectOfficer = new Label("Select Director:");
         selectOfficer.setStyle("-fx-font-size: 13px; -fx-font-weight: bold;");
         ComboBox<String> officerPicker = new ComboBox<>();
         fillOfficerPicker(officerPicker);
-        officerPicker.setPromptText("Choose an officer...");
+        officerPicker.setPromptText("Choose a Director...");
         officerPicker.setStyle("-fx-font-size: 13px;");
         officerPicker.setMaxWidth(Double.MAX_VALUE);
         PasswordField currentPassword = styledPasswordField("Current password");
@@ -59,7 +59,7 @@ public class ChangeKeyScreen {
         continueBtn.setOnAction(event -> {
             feedback.setVisible(false);
             if (officerPicker.getValue() == null) {
-                feedback.setText("Please select an officer.");
+                feedback.setText("Please select a Director");
                 feedback.setVisible(true);
                 return;
             }
@@ -79,15 +79,18 @@ public class ChangeKeyScreen {
             int officerId = Integer.parseInt(
                     officerPicker.getValue().replaceAll(".*\\((\\d+)\\).*", "$1"));
             try {
-                Authentication.Result authResult = app.resolve(current);
-                if (authResult.action == Authentication.Result.Action.WRONG || authResult.student == null || authResult.student.getId() != officerId) {
-                    feedback.setText("Current password is incorrect.");
+                Student officer = app.getStudentDatabase().getStudent(officerId);
+                if (officer == null) {
+                    feedback.setText("Selected officer not found.");
                     feedback.setVisible(true);
                     return;
                 }
-                Student officer = app.getStudentDatabase().getStudent(officerId);
-                officer.setPassword(newPass);
-                app.getStudentDatabase().setPassword(officerId, officer.getPassword());
+                if (!BCrypt.checkpw(current, officer.getPassword())) {
+                    feedback.setText("Current password for this officer is incorrect.");
+                    feedback.setVisible(true);
+                    return;
+                }
+                app.getStudentDatabase().setPassword(officerId, newPass);
                 showSuccess();
             } catch (SQLException exception) {
                 feedback.setText("Failed to update key: " + exception.getMessage());
@@ -102,7 +105,7 @@ public class ChangeKeyScreen {
         root.setPadding(new Insets(40));
         root.setStyle("-fx-background-color: #f4f4f4;");
         stage.setScene(new Scene(root, 500, 520));
-        stage.setTitle("Change Officer Key");
+        stage.setTitle("Change Director Key");
         stage.show();
     }
 
@@ -119,7 +122,7 @@ public class ChangeKeyScreen {
                 }
             }
         } catch (SQLException e) {
-            picker.getItems().add("Error loading officers");
+            picker.getItems().add("Error loading directors");
         }
     }
 

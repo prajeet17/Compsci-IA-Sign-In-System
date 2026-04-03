@@ -155,9 +155,8 @@ public class SignInApp extends Application {
      */
     private void fill() throws SQLException {
         if (studentDatabase.size() == 0) {
-            studentDatabase.addStudent(new Student("Bob", "123-456-789", 1001, "1001", Status.STUDENT, false));
-            studentDatabase.addStudent(new Student("Jack", "123-456-789", 1003, "officer", Status.OFFICER, false));
-            studentDatabase.addStudent(new Student("Jeff", "123-456-789", 1004, "admin", Status.ADMIN,false));
+            studentDatabase.addStudent(new Student("Jack", "123-456-789", 1003, BCrypt.hashpw("officer", BCrypt.gensalt()), Status.OFFICER, true));
+            studentDatabase.addStudent(new Student("Jeff", "123-456-789", 1004, BCrypt.hashpw("admin", BCrypt.gensalt()), Status.ADMIN,true));
         }
     }
 }

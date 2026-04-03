@@ -26,7 +26,7 @@ public class OfficerDashboardScreen {
      * displays the screen
      */
     public void show() {
-        Label title = new Label("Officer Dashboard");
+        Label title = new Label("Director Dashboard");
         title.setStyle("-fx-font-size: 28px; -fx-font-weight: bold;");
         Button logoutButton = new Button("Logout");
         logoutButton.setStyle("-fx-background-color: #29ABE2; -fx-text-fill: white; -fx-font-size: 13px; -fx-font-weight: bold; -fx-background-radius: 20; -fx-padding: 8 20;");
@@ -60,7 +60,7 @@ public class OfficerDashboardScreen {
         root.setPadding(new Insets(40));
         root.setStyle("-fx-background-color: #f4f4f4;");
         stage.setScene(new Scene(root, 640, 520));
-        stage.setTitle("Officer Dashboard");
+        stage.setTitle("Director Dashboard");
         stage.setResizable(false);
         stage.show();
     }
