@@ -16,8 +16,8 @@ public class SignInApp extends Application {
     private AttendanceDatabase attendanceDatabase;
     private Authentication authentication;
     private Charts charts;
-    int sessionEnd = 22; // 10:00 pm by default
-    int logoutDelay = 72; // 1 hour and 12 minutes
+    int sessionEnd = 16;
+    int logoutDelay = 5;
 
     /**
      * initializes the application, sets up databases, and displays initial login screen
