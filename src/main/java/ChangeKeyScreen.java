@@ -101,7 +101,7 @@ public class ChangeKeyScreen {
         VBox root = new VBox(16, back, changeOfficerKey, card);
         root.setPadding(new Insets(40));
         root.setStyle("-fx-background-color: #f4f4f4;");
-        stage.setScene(new Scene(root, 560, 520));
+        stage.setScene(new Scene(root, 500, 520));
         stage.setTitle("Change Officer Key");
         stage.show();
     }

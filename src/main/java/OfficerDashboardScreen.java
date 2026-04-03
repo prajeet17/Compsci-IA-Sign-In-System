@@ -59,7 +59,7 @@ public class OfficerDashboardScreen {
         VBox root = new VBox(24, header, chartsTile, dbTile);
         root.setPadding(new Insets(40));
         root.setStyle("-fx-background-color: #f4f4f4;");
-        stage.setScene(new Scene(root, 640, 420));
+        stage.setScene(new Scene(root, 640, 520));
         stage.setTitle("Officer Dashboard");
         stage.setResizable(false);
         stage.show();

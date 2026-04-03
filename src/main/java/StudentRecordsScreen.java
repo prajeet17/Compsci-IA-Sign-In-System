@@ -229,7 +229,7 @@ public class StudentRecordsScreen {
         });
         dialog.showAndWait().ifPresent(newTime -> {
             try {
-                app.getAttendanceDatabase().editSignOutTime(record.getStudentId(), newTime);
+                app.getAttendanceDatabase().editSignOutTime(record.getStudentId(), record.getSignInTime(),newTime);
                 loadRecords(table, start, end, "");
             } catch (SQLException exception) {
                 showError("Failed to save: " + exception.getMessage());

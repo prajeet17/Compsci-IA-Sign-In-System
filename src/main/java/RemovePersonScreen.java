@@ -163,7 +163,7 @@ public class RemovePersonScreen {
         root.setAlignment(Pos.CENTER);
         root.setPadding(new Insets(40));
         root.setStyle("-fx-background-color: #f4f4f4;");
-        stage.setScene(new Scene(root, 560, 360));
+        stage.setScene(new Scene(root, 640, 520));
         PauseTransition pause = new PauseTransition(Duration.seconds(3));
         pause.setOnFinished(event -> new AdminDashboardScreen(stage, app).show());
         pause.play();

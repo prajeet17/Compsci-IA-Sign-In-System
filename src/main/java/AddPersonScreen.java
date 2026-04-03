@@ -94,7 +94,7 @@ public class AddPersonScreen {
         root.setPadding(new Insets(40));
         root.setStyle("-fx-background-color: #f4f4f4;");
         root.setAlignment(Pos.TOP_LEFT);
-        stage.setScene(new Scene(root, 560, 560));
+        stage.setScene(new Scene(root, 500, 640));
         stage.setTitle("Add Person");
         stage.show();
     }

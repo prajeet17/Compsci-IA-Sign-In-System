@@ -57,7 +57,7 @@ public class ChartsScreen {
         allTitle.setStyle("-fx-font-size: 20px; -fx-font-weight: bold;");
         Label allSubtitle = new Label("View charts and stats for all Team Members");
         allSubtitle.setStyle("-fx-font-size: 13px; -fx-text-fill: #666666;");
-        Label allIcon = new Label("◑");
+        Label allIcon = new Label("🥧"); //all emojis suggested to my by little brother using apple emojis
         allIcon.setStyle("-fx-font-size: 28px;");
         VBox allText = new VBox(4, allTitle, allSubtitle);
         HBox allTile = new HBox(16, allIcon, allText);
@@ -132,7 +132,7 @@ public class ChartsScreen {
         VBox root = new VBox(16, back, controls, charts);
         root.setPadding(new Insets(30));
         root.setStyle("-fx-background-color: #f4f4f4;");
-        stage.setScene(new Scene(root, 860, 440));
+        stage.setScene(new Scene(root, 900, 500));
         stage.setTitle("individual Analysis");
         stage.show();
     }

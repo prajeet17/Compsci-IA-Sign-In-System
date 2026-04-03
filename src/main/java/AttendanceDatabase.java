@@ -125,15 +125,18 @@ public class AttendanceDatabase {
     }
 
     /**
-     * the method to edit the sign-out time manually
-     * @param studentId student id of student
-     * @param newTime the new sign-out time
-     * @throws SQLException exception if the updating of records fails
+     * edits the sign out time of a stude t
+     * @param studentId the student id
+     * @param signInTime the sign in time
+     * @param newTime the sign out time
+     * @throws SQLException exception if something database related goes wrong
      */
-    public void editSignOutTime(int studentId, LocalDateTime newTime) throws SQLException {
-        PreparedStatement preparedStatement = conn.prepareStatement("UPDATE records SET sign_out_time = ? WHERE student_id = ? AND sign_out_time IS NULL");
+    public void editSignOutTime(int studentId, LocalDateTime signInTime, LocalDateTime newTime) throws SQLException {
+        PreparedStatement preparedStatement = conn.prepareStatement("UPDATE records SET sign_out_time = ? WHERE student_id = ? AND sign_in_time = ?");
         preparedStatement.setObject(1, newTime);
         preparedStatement.setInt(2, studentId);
+        preparedStatement.setObject(3, signInTime);
         preparedStatement.executeUpdate();
     }
+
 }
