@@ -5,15 +5,26 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
+/**
+ * handles functionality for officer dashboard
+ */
 public class OfficerDashboardScreen {
     private final Stage stage;
     private final SignInApp app;
 
+    /**
+     * creates new officer dashboard screen
+     * @param stage the stage where the screen is displayed
+     * @param app the main application
+     */
     public OfficerDashboardScreen(Stage stage, SignInApp app) {
         this.stage = stage;
         this.app = app;
     }
 
+    /**
+     * displays the screen
+     */
     public void show() {
         Label title = new Label("Officer Dashboard");
         title.setStyle("-fx-font-size: 28px; -fx-font-weight: bold;");
@@ -54,6 +65,11 @@ public class OfficerDashboardScreen {
         stage.show();
     }
 
+    /**
+     * create an icon for dashboard tiles
+     * @param symbol the icon
+     * @return an HBox containing that icon
+     */
     private HBox makeIcon(String symbol) {
         Label icon = new Label(symbol);
         icon.setStyle("-fx-font-size: 28px;");
@@ -63,6 +79,10 @@ public class OfficerDashboardScreen {
         return box;
     }
 
+    /**
+     * ensures consistent styling and effects for all tiles
+     * @param tile the tile to style
+     */
     private void styleTile(HBox tile) {
         tile.setStyle("-fx-background-color: white; -fx-background-radius: 12; -fx-border-radius: 12; -fx-border-color: #dddddd; -fx-border-width: 1; -fx-padding: 20; -fx-cursor: hand;");
         tile.setOnMouseEntered(event -> tile.setStyle("-fx-background-color: #f0f9ff; -fx-background-radius: 12; -fx-border-radius: 12; -fx-border-color: #29ABE2; -fx-border-width: 1; -fx-padding: 20; -fx-cursor: hand;"));

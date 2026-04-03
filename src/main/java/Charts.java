@@ -9,16 +9,32 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+/**
+ * this is the class that allows for the creation of charts but doesn't handle chart ui
+ */
 public class Charts {
     private final AttendanceDatabase attendanceDatabase;
     private final StudentDatabase studentDatabase;
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE"); //for bar labels
 
+    /**
+     * constructor to create a new Charts
+     * @param attendanceDatabase the attendance database from which to pull data
+     * @param studentDatabase the student database from which to pull data
+     */
     public Charts(AttendanceDatabase attendanceDatabase, StudentDatabase studentDatabase) {
         this.attendanceDatabase = attendanceDatabase;
         this.studentDatabase = studentDatabase;
     }
 
+    /**
+     * returns an observable list that can be used to generate a bar chart ui for one student
+     * @param studentId student id of that student
+     * @param start start date for which to include data
+     * @param end end date for which to include data
+     * @return an observable list that can be used to generate a bar chart ui for one student
+     * @throws SQLException exception if something database related fails
+     */
     public ObservableList<XYChart.Data<String, Number>> getStudentDataBarChart(int studentId, LocalDate start, LocalDate end) throws SQLException {
         List<AttendanceRecord> records = attendanceDatabase.getDateRangeRecords(start, end);
         ObservableList<XYChart.Data<String, Number>> data = FXCollections.observableArrayList();
@@ -36,6 +52,13 @@ public class Charts {
         return data;
     }
 
+    /**
+     * returns an observable list that can be used to generate a bar chart ui for all students
+     * @param start start date for which to include data
+     * @param end end date for which to include data
+     * @return an observable list that can be used to generate a bar chart ui for all students
+     * @throws SQLException exception if something database related fails
+     */
     public ObservableList<XYChart.Data<String, Number>> getAllStudentDataBarChart(LocalDate start, LocalDate end) throws SQLException {
         List<Student> students = studentDatabase.getAllStudents();
         List<AttendanceRecord> records = attendanceDatabase.getDateRangeRecords(start, end);
@@ -53,6 +76,13 @@ public class Charts {
         return data;
     }
 
+    /**
+     * returns an observable list that can be used to generate a pie chart ui for all students
+     * @param start start date for which to include data
+     * @param end end date for which to include data
+     * @return an observable list that can be used to generate a pie chart ui for all students
+     * @throws SQLException exception if something database related fails
+     */
     public ObservableList<PieChart.Data> getAllStudentDataPieChart(LocalDate start, LocalDate end) throws SQLException {
         List<Student> students = studentDatabase.getAllStudents();
         List<AttendanceRecord> records = attendanceDatabase.getDateRangeRecords(start, end);
@@ -78,16 +108,28 @@ public class Charts {
         return slices;
     }
 
+    /**
+     * returns date that is 7 days from the current date
+     * @return date that is 7 days from the current date
+     */
     public static LocalDate[] past7Days() {
-        return new LocalDate[]{ LocalDate.now().minusDays(6), LocalDate.now() };
+        return new LocalDate[]{LocalDate.now().minusDays(6), LocalDate.now()};
     }
 
+    /**
+     * returns date that is 30 days from the current date
+     * @return date that is 30 days from the current date
+     */
     public static LocalDate[] past30Days() {
-        return new LocalDate[]{ LocalDate.now().minusDays(29), LocalDate.now() };
+        return new LocalDate[]{LocalDate.now().minusDays(29), LocalDate.now()};
     }
 
+    /**
+     * returns all dates from start to current
+     * @return all dates from start to current
+     */
     public static LocalDate[] allTime() {
-        return new LocalDate[]{ LocalDate.of(2000, 1, 1), LocalDate.now() };
+        return new LocalDate[]{LocalDate.of(2000, 1, 1), LocalDate.now()};
     }
 
 }

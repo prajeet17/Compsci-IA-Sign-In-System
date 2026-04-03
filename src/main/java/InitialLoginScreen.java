@@ -5,15 +5,26 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
+/**
+ * this is the initial login screen that people see when they first enter the product
+ */
 public class InitialLoginScreen {
     private final Stage stage;
     private final SignInApp app;
 
+    /**
+     * constructor to create new initial login screen
+     * @param stage stage where it will be displayed
+     * @param app main application
+     */
     public InitialLoginScreen(Stage stage, SignInApp app) {
         this.stage = stage;
         this.app = app;
     }
 
+    /**
+     * displays the initial login screen
+     */
     public void show() {
         Label title = new Label("Login");
         title.setStyle("-fx-font-size: 28px; -fx-font-weight: bold;");
@@ -43,6 +54,11 @@ public class InitialLoginScreen {
         stage.show();
     }
 
+    /**
+     * handles login and logout attempts
+     * @param codeField the user's password
+     * @param errorLabel to display any errors
+     */
     private void handle(PasswordField codeField, Label errorLabel) {
         errorLabel.setVisible(false);
         String input = codeField.getText().trim();

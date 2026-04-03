@@ -5,15 +5,26 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
+/**
+ * this is the class to handle functionality for admin dashboard
+ */
 public class AdminDashboardScreen {
     private final Stage stage;
     private final SignInApp app;
 
+    /**
+     * this is the constructor that allows for the admin dashboard screen to be created
+     * @param stage this is the stage that this screen is displayed on
+     * @param app this is the main app
+     */
     public AdminDashboardScreen(Stage stage, SignInApp app) {
         this.stage = stage;
         this.app = app;
     }
 
+    /**
+     * this displays the admin dashboard screen
+     */
     public void show() {
         Label title = new Label("Admin Dashboard");
         title.setStyle("-fx-font-size: 28px; -fx-font-weight: bold;");
@@ -40,6 +51,14 @@ public class AdminDashboardScreen {
         stage.show();
     }
 
+    /**
+     * this creates the ui interactive tiles
+     * @param symbol the symbol of the tiles
+     * @param titleText the title of the tile
+     * @param subtitleText the description of the tile
+     * @param onClick the event handler
+     * @return the tile
+     */
     private HBox makeTile(String symbol, String titleText, String subtitleText, javafx.event.EventHandler<javafx.scene.input.MouseEvent> onClick) {
         Label icon = new Label(symbol);
         icon.setStyle("-fx-font-size: 24px;");

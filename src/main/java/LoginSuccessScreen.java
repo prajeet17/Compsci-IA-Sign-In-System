@@ -10,17 +10,29 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+/**
+ * success screen to show user logged in and out successfully
+ */
 public class LoginSuccessScreen {
     private final Stage stage;
     private final SignInApp app;
     private final SignInStatus result;
 
+    /**
+     * the constructor to create a new login success screen
+     * @param stage the stage where the screen is displayed
+     * @param app the main application
+     * @param result time and status
+     */
     public LoginSuccessScreen(Stage stage, SignInApp app, SignInStatus result) {
         this.stage = stage;
         this.app = app;
         this.result = result;
     }
 
+    /**
+     * displays the screen
+     */
     public void show() {
         Circle circle = new Circle(50, Color.web("#4CAF50"));
         Label check = new Label("✅");
@@ -58,6 +70,10 @@ public class LoginSuccessScreen {
         pause.play();
     }
 
+    /**
+     * returns the student name
+     * @return student name
+     */
     private String getStudentName() {
         try {
             Student student = app.getStudentDatabase().getStudent(result.activeRecord.getStudentId());
@@ -71,6 +87,11 @@ public class LoginSuccessScreen {
         }
     }
 
+    /**
+     * creates sign in or sign out message for success screen
+     * @param name name of student
+     * @return the success message
+     */
     private String buildActionText(String name) {
         if (result.type == Type.IN || result.type == Type.AUTO) {
             return "Welcome " + name;
@@ -80,6 +101,10 @@ public class LoginSuccessScreen {
         }
     }
 
+    /**
+     * creates sign in or sign out message with time for success screen
+     * @return the string of sign in or sign out and the time
+     */
     private String buildTimeText() {
         java.time.format.DateTimeFormatter fmt = java.time.format.DateTimeFormatter.ofPattern("h:mm a");
         if (result.type == Type.IN || result.type == Type.AUTO)

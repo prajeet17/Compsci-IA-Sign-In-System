@@ -12,18 +12,30 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+/**
+ * this is the student records screen
+ */
 public class StudentRecordsScreen {
     private final Stage stage;
     private final SignInApp app;
     private final boolean canEdit; // true for admin, false for officer
     private static final DateTimeFormatter FMT = DateTimeFormatter.ofPattern("MM/dd/yyyy h:mm a");
 
+    /**
+     * constructor to create a new student records screen
+     * @param stage the stage where this screen is displayed
+     * @param app the main application
+     * @param canEdit whether editing is allowed based on status
+     */
     public StudentRecordsScreen(Stage stage, SignInApp app, boolean canEdit) {
         this.stage = stage;
         this.app = app;
         this.canEdit = canEdit;
     }
 
+    /**
+     * displays the screen
+     */
     public void show() {
         Label back = new Label("back to dashboard");
         back.setStyle("-fx-font-size: 13px; -fx-text-fill: #29ABE2; -fx-cursor: hand;");
@@ -144,7 +156,13 @@ public class StudentRecordsScreen {
         stage.show();
     }
 
-
+    /**
+     * fills attendance records into a table based on the selected date range
+     * @param table the table to fill
+     * @param start start date
+     * @param end end date
+     * @param search the student name to filter by
+     */
     private void loadRecords(TableView<AttendanceRecord> table, LocalDate start, LocalDate end, String search) {
         table.getItems().clear();
         try {
@@ -165,6 +183,13 @@ public class StudentRecordsScreen {
         }
     }
 
+    /**
+     * allows the admin to edit the sign out time of a record
+     * @param record the record to edit
+     * @param table the table to refresh after saving
+     * @param start start date
+     * @param end end date
+     */
     private void showEditDialog(AttendanceRecord record, TableView<AttendanceRecord> table, LocalDate start, LocalDate end) {
         Dialog<LocalDateTime> dialog = new Dialog<>();
         dialog.setTitle("Edit Sign-out Time");
@@ -204,8 +229,7 @@ public class StudentRecordsScreen {
         });
         dialog.showAndWait().ifPresent(newTime -> {
             try {
-                app.getAttendanceDatabase().editSignOutTime(
-                        record.getStudentId(), newTime);
+                app.getAttendanceDatabase().editSignOutTime(record.getStudentId(), newTime);
                 loadRecords(table, start, end, "");
             } catch (SQLException exception) {
                 showError("Failed to save: " + exception.getMessage());
@@ -213,12 +237,20 @@ public class StudentRecordsScreen {
         });
     }
 
+    /**
+     * returns the style for the buttons to use
+     * @return the css string
+     */
     private String outlineButtonStyle() {
         return "-fx-background-color: transparent; -fx-border-color: #cccccc; -fx-border-radius: 8; -fx-background-radius: 8; -fx-font-size: 12px; -fx-padding: 6 14;";
     }
 
-    private void showError(String msg) {
-        Alert alert = new Alert(Alert.AlertType.ERROR, msg, ButtonType.OK);
+    /**
+     * displays error with message
+     * @param message the message
+     */
+    private void showError(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR, message, ButtonType.OK);
         alert.showAndWait();
     }
 }

@@ -13,19 +13,30 @@ import org.mindrot.jbcrypt.BCrypt;
 import java.sql.SQLException;
 import java.util.List;
 
+/**
+ * this is the screen that allows the admin to change the key for officers and admins
+ */
 public class ChangeKeyScreen {
     private final Stage stage;
     private final SignInApp app;
 
+    /**
+     * this is the constructor that creates a new change key screen
+     * @param stage the stage where the screen is displayed
+     * @param app the main app
+     */
     public ChangeKeyScreen(Stage stage, SignInApp app) {
         this.stage = stage;
         this.app = app;
     }
 
+    /**
+     * this displays the screen and handles events
+     */
     public void show() {
         Label back = new Label("back to dashboard");
         back.setStyle("-fx-font-size: 13px; -fx-text-fill: #29ABE2; -fx-cursor: hand;");
-        back.setOnMouseClicked(e -> new AdminDashboardScreen(stage, app).show());
+        back.setOnMouseClicked(event -> new AdminDashboardScreen(stage, app).show());
         Label changeOfficerKey = new Label("Change Officer Key");
         changeOfficerKey.setStyle("-fx-font-size: 26px; -fx-font-weight: bold;");
         Label selectOfficer = new Label("Select officer:");
@@ -95,6 +106,10 @@ public class ChangeKeyScreen {
         stage.show();
     }
 
+    /**
+     * this fills a box with anyone who is an officer or admin
+     * @param picker
+     */
     private void fillOfficerPicker(ComboBox<String> picker) {
         try {
             List<Student> students = app.getStudentDatabase().getAllStudents();
@@ -108,6 +123,9 @@ public class ChangeKeyScreen {
         }
     }
 
+    /**
+     * this shows the success message after updating the key
+     */
     private void showSuccess() {
         Circle circle = new Circle(50, Color.web("#4CAF50"));
         Label check = new Label("✅");
@@ -127,17 +145,25 @@ public class ChangeKeyScreen {
         root.setStyle("-fx-background-color: #f4f4f4;");
         stage.setScene(new Scene(root, 560, 360));
         PauseTransition pause = new PauseTransition(Duration.seconds(3));
-        pause.setOnFinished(e -> new AdminDashboardScreen(stage, app).show());
+        pause.setOnFinished(event -> new AdminDashboardScreen(stage, app).show());
         pause.play();
     }
 
+    /**
+     * returns the string used for text input fields
+     * @return css string for field appearance
+     */
     private PasswordField styledPasswordField(String prompt) {
-        PasswordField f = new PasswordField();
-        f.setPromptText(prompt);
-        f.setStyle("-fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: #cccccc; -fx-border-width: 1; -fx-padding: 8 12; -fx-font-size: 13px;");
-        return f;
+        PasswordField field = new PasswordField();
+        field.setPromptText(prompt);
+        field.setStyle("-fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: #cccccc; -fx-border-width: 1; -fx-padding: 8 12; -fx-font-size: 13px;");
+        return field;
     }
 
+    /**
+     * returns string used for the ui containers
+     * @return css string used for ui containers
+     */
     private String cardStyle() {
         return "-fx-background-color: white; -fx-background-radius: 12; -fx-border-radius: 12; -fx-border-color: #dddddd; -fx-border-width: 1; -fx-padding: 30;";
     }

@@ -13,15 +13,26 @@ import javafx.util.Duration;
 import java.sql.SQLException;
 import java.util.List;
 
+/**
+ * this is the screen to handle the functionality of removing people
+ */
 public class RemovePersonScreen {
     private final Stage stage;
     private final SignInApp app;
 
+    /**
+     * constructor to create new remove person screen
+     * @param stage the stage this screen is displayed on
+     * @param app the main application
+     */
     public RemovePersonScreen(Stage stage, SignInApp app) {
         this.stage = stage;
-        this.app   = app;
+        this.app = app;
     }
 
+    /**
+     * displays the screen
+     */
     public void show() {
         Label back = new Label("back to dashboard");
         back.setStyle("-fx-font-size: 13px; -fx-text-fill: #29ABE2; -fx-cursor: hand;");
@@ -48,6 +59,11 @@ public class RemovePersonScreen {
         stage.show();
     }
 
+    /**
+     * fills VBox with list of students
+     * @param listBox the box to put the list of students in
+     * @param search the field to filter by name
+     */
     private void loadStudentList(VBox listBox, String search) {
         listBox.getChildren().clear();
         try {
@@ -81,6 +97,10 @@ public class RemovePersonScreen {
         }
     }
 
+    /**
+     * displays confirmation message for removing a student
+     * @param student student to be removed
+     */
     private void showConfirmation(Student student) {
         Polygon triangle = new Polygon(40.0, 0.0, 80.0, 70.0, 0.0, 70.0);
         triangle.setFill(Color.TRANSPARENT);
@@ -122,7 +142,10 @@ public class RemovePersonScreen {
         stage.show();
     }
 
-
+    /**
+     * displays a success message after student removed
+     * @param name the name of the removed student
+     */
     private void showSuccess(String name) {
         Circle circle = new Circle(50, Color.web("#4CAF50"));
         Label check = new Label("✅");
@@ -146,9 +169,12 @@ public class RemovePersonScreen {
         pause.play();
     }
 
-
-    private void showError(String msg) {
-        Alert alert = new Alert(Alert.AlertType.ERROR, msg, ButtonType.OK);
+    /**
+     * displays error message
+     * @param message the message
+     */
+    private void showError(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR, message, ButtonType.OK);
         alert.showAndWait();
     }
 }

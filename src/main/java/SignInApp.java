@@ -6,6 +6,9 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
+/**
+ * this is the main application
+ */
 public class SignInApp extends Application {
     private Stage stage;
     private Student currentStudent;
@@ -16,6 +19,10 @@ public class SignInApp extends Application {
     int sessionEnd = 22; // 10:00 pm by default
     int logoutDelay = 72; // 1 hour and 12 minutes
 
+    /**
+     * initializes the application, sets up databases, and displays initial login screen
+     * @param stage the stage where everything is shown
+     */
     @Override
     public void start(Stage stage) {
         this.stage = stage;
@@ -32,10 +39,22 @@ public class SignInApp extends Application {
         showInitialLoginScreen();
     }
 
+    /**
+     * determines what action must be taken for a student has using their password
+     * @param input the student password
+     * @return the action
+     * @throws SQLException exception if anything database related fails
+     */
     public Authentication.Result resolve(String input) throws SQLException {
         return authentication.resolve(input);
     }
 
+    /**
+     * handles sign in and out logic
+     * @param studentId the student id of that student
+     * @return the sign in status showing what action was taken
+     * @throws SQLException exception if something database related fails
+     */
     public SignInStatus signIn(int studentId) throws SQLException {
         AttendanceRecord last = attendanceDatabase.getLastRecord(studentId);
         if (last == null || last.getSignOutTime() != null) {
@@ -53,47 +72,88 @@ public class SignInApp extends Application {
         return new SignInStatus(Type.OUT, record, null);
     }
 
+    /**
+     * displays the initial login screen
+     */
     public void showInitialLoginScreen() {
         new InitialLoginScreen(stage, this).show();
     }
 
+    /**
+     * displays the login success screen after sign in or out
+     * @param result the sign in status
+     */
     public void showLoginSuccessScreen(SignInStatus result) {
         new LoginSuccessScreen(stage, this, result).show();
     }
 
+    /**
+     * displays officer dashboard screen
+     */
     public void showOfficerDashboardScreen() {
         new OfficerDashboardScreen(stage, this).show();
     }
 
+    /**
+     * displays the admin dashboard
+     */
     public void showAdminDashboardScreen() {
         new AdminDashboardScreen(stage, this).show();
     }
 
+    /**
+     * gets the student database
+     * @return the student database
+     */
     public StudentDatabase getStudentDatabase() {
         return studentDatabase;
     }
 
+    /**
+     * returns the attendance database
+     * @return the attendance database
+     */
     public AttendanceDatabase getAttendanceDatabase() {
         return attendanceDatabase;
     }
 
+    /**
+     * sets the student that has just signed in
+     * @param currentStudent the student that just signed in
+     */
     public void setCurrentStudent(Student currentStudent) {
         this.currentStudent = currentStudent;
     }
 
+    /**
+     * return the student that has just signed in
+     * @return the student that has just signed in
+     */
     public Student getCurrentStudent() {
         return this.currentStudent;
     }
 
+    /**
+     * returns the charts
+     * @return the charts
+     */
     public Charts getCharts() {
         return charts;
     }
 
+    /**
+     * main method
+     * @param args command line arguments
+     */
     public static void main(String[] args) {
         launch(args);
     }
 
-    private void fill() throws SQLException { //temp, for testing, will be removed eventually
+    /**
+     * adds starting data when empty
+     * @throws SQLException exception is something database related fails
+     */
+    private void fill() throws SQLException {
         if (studentDatabase.size() == 0) {
             studentDatabase.addStudent(new Student("Bob", "123-456-789", 1001, "1001", Status.STUDENT, false));
             studentDatabase.addStudent(new Student("Jack", "123-456-789", 1003, "officer", Status.OFFICER, false));
