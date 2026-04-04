@@ -16,8 +16,8 @@ public class SignInApp extends Application {
     private AttendanceDatabase attendanceDatabase;
     private Authentication authentication;
     private Charts charts;
-    int sessionEnd = 16;
-    int logoutDelay = 5;
+    int sessionEnd = 20;
+    int logoutDelay = 72;
 
     /**
      * initializes the application, sets up databases, and displays initial login screen
@@ -153,7 +153,7 @@ public class SignInApp extends Application {
      * adds starting data when empty
      * @throws SQLException exception is something database related fails
      */
-    private void fill() throws SQLException {
+    private void fill() throws SQLException { //fill on startup with admin, right now data is temporary
         if (studentDatabase.size() == 0) {
             studentDatabase.addStudent(new Student("Jack", "123-456-789", 1003, BCrypt.hashpw("officer", BCrypt.gensalt()), Status.OFFICER, true));
             studentDatabase.addStudent(new Student("Jeff", "123-456-789", 1004, BCrypt.hashpw("admin", BCrypt.gensalt()), Status.ADMIN,true));
